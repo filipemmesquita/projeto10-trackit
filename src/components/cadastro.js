@@ -3,7 +3,8 @@ import axios from 'axios';
 import logo from '../assets/trackit.png'
 import { Link, useNavigate  } from "react-router-dom";
 import { useState } from "react";
-import { BallTriangle } from  'react-loader-spinner'
+import { ThreeDots } from  'react-loader-spinner'
+
 
 export default function Cadastro(){
     const [email, setEmail] = useState("");
@@ -41,7 +42,7 @@ export default function Cadastro(){
                 <Field type="password" value={senha} onChange={e => setSenha(e.target.value)} placeholder='senha' required disabled={isDisabled ? true : false} />
                 <Field type="text" value={nome} onChange={e => setNome(e.target.value)} placeholder='nome' required disabled={isDisabled ? true : false} />
                 <Field type="text" value={foto} onChange={e => setFoto(e.target.value)} placeholder='foto' required disabled={isDisabled ? true : false} />
-                <Button type="submit" disabled={isDisabled ? true : false} >{isDisabled ? <BallTriangle color="white" height={40} width={40} /> : "Cadastrar"}</Button>
+                <Button type="submit" disabled={isDisabled ? true : false} >{isDisabled ? <ThreeDots color="white" height={40} width={40} /> : "Cadastrar"}</Button>
             </form>
             
             <Link to="/">Já possui uma conta? Faça login!</Link>

@@ -2,14 +2,16 @@ import styled from 'styled-components';
 import axios from 'axios';
 import logo from '../assets/trackit.png'
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { BallTriangle } from  'react-loader-spinner'
+import { useState,useContext } from "react";
+import { ThreeDots } from  'react-loader-spinner'
+import UserContext from "../contexts";
 
 export default function Login(){
     const [email, setEmail] = useState("");
 	const [senha, setSenha] = useState("");
     const [isDisabled, setDisabled]=useState(false);
     const navigation=useNavigate();
+    const { header, user} =useContext(UserContext);
     function entrar(event){
         event.preventDefault();
         const submitObject ={email:email,
@@ -17,7 +19,15 @@ export default function Login(){
             setDisabled(true);
         const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", submitObject);
         requisicao.then(response =>{
-            console.log(response.data);
+            const infoObject={name:response.data.name,
+                image:response.data.image}
+            user.setInfo(infoObject);
+            header.setConfig({
+                headers: {
+                    "Authorization": `Bearer ${response.data.token}`
+                }
+                });
+            
             navigation('/hoje/')}
         );
         requisicao.catch(response =>{
@@ -32,7 +42,7 @@ export default function Login(){
             <form onSubmit={entrar}>
             <Field type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder='email' required disabled={isDisabled ? true : false} />
                 <Field type="password" value={senha} onChange={e => setSenha(e.target.value)} placeholder='senha' required disabled={isDisabled ? true : false} />
-                <Button type="submit" disabled={isDisabled ? true : false} >{isDisabled ? <BallTriangle color="white" height={40} width={40} /> : "Entrar"}</Button>
+                <Button type="submit" disabled={isDisabled ? true : false} >{isDisabled ? <ThreeDots color="white" height={40} width={40} /> : "Entrar"}</Button>
             </form>
             <Link to="/cadastro/">Não possui uma conta? cadastre-se!</Link>
         </Container>
