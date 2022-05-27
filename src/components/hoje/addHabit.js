@@ -6,17 +6,16 @@ import { ThreeDots } from  'react-loader-spinner'
 
 export default function AddHabit(props){
 const dayLetters=["D","S","T","Q","Q","S","S"];
-const [selectedDays,setSelectedDays]=useState([])
+
 const { header } =useContext(UserContext);
-const [habitName,SetHabitName]=useState("");
 const [isLoading,SetLoading]=useState(false);
 
 function handleSave(event){
-    const submitObject={name:habitName,days:selectedDays.sort()}
-    if(habitName===""){
+    const submitObject={name:props.habitName,days:props.selectedDays.sort()}
+    if(props.habitName===""){
         alert("Preencha um nome para seu hábito!")
     }
-    else if(selectedDays===[]){
+    else if(props.selectedDays===[]){
         alert("Escolha quais dias da semana você ira praticar seu hábito!")
     }
     else{
@@ -25,8 +24,6 @@ function handleSave(event){
     request.then(request=>{
     SetLoading(false);
     console.log(request.data);
-    SetHabitName("");
-    setSelectedDays([]);
     props.setAdding(false);
     });
     request.catch(error=>{
@@ -39,14 +36,14 @@ function handleSave(event){
 
     return(
         <Content>
-            <input type="text" placeholder="nome do hábito" value={habitName} onChange={e=>SetHabitName(e.target.value)} required disabled={isLoading? true:false}/>
+            <input type="text" placeholder="nome do hábito" value={props.habitName} onChange={e=>props.setHabitName(e.target.value)} required disabled={isLoading? true:false}/>
             <DayWrapper>
             {dayLetters.map((letter, index)=><Day 
                 isLoading={isLoading}
                 index={index} 
                 key={index} 
-                selectedDays={selectedDays} 
-                setSelectedDays={setSelectedDays}>
+                selectedDays={props.selectedDays} 
+                setSelectedDays={props.setSelectedDays}>
                     {letter}
                 </Day>)}
             </DayWrapper>
@@ -59,7 +56,8 @@ function handleSave(event){
     );
 }
 function Day(props){
-    const[isSelected,setSelected]=useState(false);
+    const INITIAL_ISSELECTED=props.selectedDays.includes(props.index);
+    const[isSelected,setSelected]=useState(INITIAL_ISSELECTED);
     function handleClick(){
         if(isSelected){deSelect()}
         else{select()}

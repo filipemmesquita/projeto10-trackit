@@ -9,6 +9,9 @@ export default function Hoje(){
     const { header, user } =useContext(UserContext);
     const [isAdding,setAdding]=useState(false);
 
+    const [habitName,setHabitName]=useState("");
+    const [selectedDays,setSelectedDays]=useState([])
+
     return(
         <>
             <TopBar />
@@ -16,7 +19,12 @@ export default function Hoje(){
                 <TopWrapper>
                     <h1>Meus hábitos</h1><Button onClick={()=>setAdding(true)}>+</Button>
                 </TopWrapper>
-                {isAdding ? <AddHabit setAdding={setAdding} /> : "" }
+                {isAdding ? <AddHabit 
+                setAdding={setAdding}
+                habitName={habitName}
+                setHabitName={setHabitName}
+                selectedDays={selectedDays}
+                setSelectedDays={setSelectedDays} /> : "" }
                 <Content>
                     <p>Você não tem nenhum hábito cadastrado ainda. adicione um hábito para começar a trackear!</p>
                 </Content>
