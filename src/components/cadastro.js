@@ -14,18 +14,18 @@ export default function Cadastro(){
     const [isDisabled, setDisabled]=useState(false);
     const navigation = useNavigate();
 
-    function cadastrar(event){
+    function signUp(event){
         event.preventDefault();
         const submitObject ={email:email,
             name:nome,
             image:foto,
             password:senha}
             setDisabled(true);
-        const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", submitObject);
-        requisicao.then(
+        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", submitObject);
+        request.then(
             navigation('/')
         );
-        requisicao.catch(response =>{
+        request.catch(response =>{
             alert("Não foi possível concluir seu cadastro!");
             setDisabled(false);
             console.log(response.data);}
@@ -37,7 +37,7 @@ export default function Cadastro(){
     return(
         <Container>
             <Logo src={logo} />
-            <form onSubmit={cadastrar}>
+            <form onSubmit={signUp}>
                 <Field type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder='email' required disabled={isDisabled ? true : false} />
                 <Field type="password" value={senha} onChange={e => setSenha(e.target.value)} placeholder='senha' required disabled={isDisabled ? true : false} />
                 <Field type="text" value={nome} onChange={e => setNome(e.target.value)} placeholder='nome' required disabled={isDisabled ? true : false} />

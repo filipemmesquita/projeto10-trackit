@@ -12,13 +12,13 @@ export default function Login(){
     const [isDisabled, setDisabled]=useState(false);
     const navigation=useNavigate();
     const { header, user} =useContext(UserContext);
-    function entrar(event){
+    function logIn(event){
         event.preventDefault();
         const submitObject ={email:email,
             password:senha}
             setDisabled(true);
-        const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", submitObject);
-        requisicao.then(response =>{
+        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", submitObject);
+        request.then(response =>{
             const infoObject={name:response.data.name,
                 image:response.data.image}
             user.setInfo(infoObject);
@@ -30,7 +30,7 @@ export default function Login(){
             
             navigation('/hoje/')}
         );
-        requisicao.catch(response =>{
+        request.catch(response =>{
             alert("Credenciais inválidas!");
             setDisabled(false);
             console.log(response.data);}
@@ -39,7 +39,7 @@ export default function Login(){
     return(
         <Container>
             <Logo src={logo} />
-            <form onSubmit={entrar}>
+            <form onSubmit={logIn}>
             <Field type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder='email' required disabled={isDisabled ? true : false} />
                 <Field type="password" value={senha} onChange={e => setSenha(e.target.value)} placeholder='senha' required disabled={isDisabled ? true : false} />
                 <Button type="submit" disabled={isDisabled ? true : false} >{isDisabled ? <ThreeDots color="white" height={40} width={40} /> : "Entrar"}</Button>

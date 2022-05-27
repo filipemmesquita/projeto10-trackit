@@ -4,7 +4,7 @@ import Login from './components/login';
 import GlobalStyle from "./globalStyles";
 import UserContext from "./contexts";
 import { useState } from "react";
-import Hoje from "./components/hoje";
+import Hoje from "./components/hoje/hoje";
 
 
 

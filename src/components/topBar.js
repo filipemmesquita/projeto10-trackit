@@ -7,15 +7,15 @@ export default function TopBar(){
 
 
     return(
-        
+        <>
             <Container>
                 <h1>TrackIt</h1> <img src={user.info.image} alt="Foto do Usuário" />
             </Container>
-       
+        </>
     );
 }
 const Container =styled.div`
-position:sticky;
+position:fixed;
 top:0;
 left:0;
 right:0;
