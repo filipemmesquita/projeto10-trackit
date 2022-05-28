@@ -39,7 +39,6 @@ function Day(props){
     );
 };
 const Container=styled.div`
-width: 340px;
 height: 91px;
 background: #FFFFFF;
 border-radius: 5px;

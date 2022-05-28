@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
 input{
-    width:305px;
+    width:303px;
     height: 45px;
     font-size: 19.976px;
     background: #FFFFFF;

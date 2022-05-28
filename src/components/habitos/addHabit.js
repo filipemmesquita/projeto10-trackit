@@ -24,6 +24,8 @@ function handleSave(event){
     request.then(request=>{
     setLoading(false);
     props.setAdding(false);
+    props.setHabitName("");
+    props.setSelectedDays([]);
     props.requestHabitList();
     });
     request.catch(error=>{
@@ -84,7 +86,7 @@ background: #FFFFFF;
 border-radius: 5px;
 display: flex;
 flex-direction: column;
-padding:19px;
+padding:10px;
 box-sizing: border-box;
 margin-bottom: 30px;
 `;

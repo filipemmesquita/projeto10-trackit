@@ -5,6 +5,8 @@ import GlobalStyle from "./globalStyles";
 import UserContext from "./contexts";
 import { useState } from "react";
 import Hoje from "./components/hoje/hoje";
+import Habitos from "./components/habitos/habitos";
+import Historico from "./components/historico/historico";
 
 
 
@@ -25,9 +27,9 @@ export default function App(){
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/cadastro/" element={<Cadastro />} />
-                <Route path="/habitos" />
-                <Route path="/hoje" element={<Hoje />}/>
-                <Route path="/historico" />
+                <Route path="/habitos/" element={<Habitos />} />
+                <Route path="/hoje/" element={<Hoje />}/>
+                <Route path="/historico/" element={<Historico />} />
             </Routes>
             </UserContext.Provider>
         </BrowserRouter>
