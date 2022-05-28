@@ -15,7 +15,7 @@ export default function App(){
     const header={config, setConfig}
     const [info,setInfo]=useState(null);
     const user={info,setInfo}
-    const [percent,setPercent]=useState(null);
+    const [percent,setPercent]=useState(0);
     const [call,setCall]=useState(0);
     const donePercent={percent, setPercent, 
         call, setCall}

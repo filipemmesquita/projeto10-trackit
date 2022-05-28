@@ -3,6 +3,8 @@ import { useContext,useEffect,useState } from "react";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import { CircularProgressbar,buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 export default function Menu(){
     const { header, donePercent } =useContext(UserContext);
@@ -24,7 +26,6 @@ export default function Menu(){
     function calculatePercent(){
         const result=(percentCurrent/percentMax)*100
         donePercent.setPercent(result);
-        console.log(donePercent.percent)
     }
     useEffect(calculatePercent, [percentMax,percentCurrent]);
     useEffect(handleCall, [donePercent.call])
@@ -33,7 +34,22 @@ export default function Menu(){
         <>
             <Container>
                 <Link to="/habitos/"><Button>Hábitos</Button></Link>
-                    <ProgressBar><Link to="/hoje/">Hoje{donePercent.percent}</Link></ProgressBar>
+                    <ProgressWrapper>
+                        <Link to="/hoje/">
+                            <CircularProgressbar
+                                value={donePercent.percent}
+                                text={"Hoje"}
+                                background={true}
+                                backgroundPadding={6}
+                                styles={buildStyles({
+                                    backgroundColor: "#52B6FF",
+                                    textColor: "white",
+                                    pathColor: "white",
+                                    trailColor: "transparent"
+                                  })}
+                            />
+                        </Link>
+                    </ProgressWrapper>
                 <Link to="/historico/"><Button>Histórico</Button></Link>
             </Container>
         </>
@@ -55,17 +71,9 @@ padding:22px 36px 26px;
 font-size: 17.976px;
 color: #52B6FF;
 `;
-const ProgressBar=styled.div`
+const ProgressWrapper=styled.div`
 position:relative;
 bottom:20px;
 height: 91px;
 width: 91px;
-display: flex;
-justify-content: center;
-align-items: center;
-border-radius: 98.5px;
-background: #52B6FF;
-a{
-    color:white;
-}
 `;
