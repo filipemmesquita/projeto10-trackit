@@ -1,16 +1,39 @@
-//import UserContext from "../contexts";
-//import { useContext } from "react";
+import UserContext from "../contexts";
+import { useContext,useEffect,useState } from "react";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import axios from "axios";
 
 export default function Menu(){
-
+    const { header, donePercent } =useContext(UserContext);
+    const [percentMax, setPercentMax]=useState(null);
+    const [percentCurrent,setPercentCurrent]=useState(0);
+    function handleCall(){
+        const requisition=axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", header.config)
+        requisition.then(response=>{
+            setPercentMax(response.data.length);
+            let newPercentCurrent=0;
+            response.data.forEach(habit=>{if(habit.done){newPercentCurrent++}})
+            setPercentCurrent(newPercentCurrent);            
+        })
+        requisition.catch(error=>{
+            alert("algo deu ruim")
+            console.log(error.data)
+        });
+    }
+    function calculatePercent(){
+        const result=(percentCurrent/percentMax)*100
+        donePercent.setPercent(result);
+        console.log(donePercent.percent)
+    }
+    useEffect(calculatePercent, [percentMax,percentCurrent]);
+    useEffect(handleCall, [donePercent.call])
 
     return(
         <>
             <Container>
                 <Link to="/habitos/"><Button>Hábitos</Button></Link>
-                <ProgressBar><Link to="/hoje/">Hoje</Link></ProgressBar>
+                    <ProgressBar><Link to="/hoje/">Hoje{donePercent.percent}</Link></ProgressBar>
                 <Link to="/historico/"><Button>Histórico</Button></Link>
             </Container>
         </>

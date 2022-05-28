@@ -2,13 +2,18 @@ import styled from "styled-components";
 import { useContext } from "react";
 import UserContext from "../../contexts";
 import axios from "axios";
+import dayjs from "dayjs";
 
 export default function Habit(props){
 const DAYLETTERS=["D","S","T","Q","Q","S","S"];
-const { header } =useContext(UserContext);
+const { header,donePercent } =useContext(UserContext);
+const date=dayjs();
 function deleteHabit(){
     const requisition = axios.delete("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/"+props.id,header.config)
-    requisition.then(props.requestHabitList());
+    requisition.then(()=>{
+        props.requestHabitList()
+        donePercent.setCall(date.$ms); 
+    });
     requisition.catch(error=>{alert("Algo deu errado com a remoção");
         console.log(error.data)})
 }

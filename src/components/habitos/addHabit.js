@@ -3,11 +3,12 @@ import UserContext from "../../contexts";
 import styled from "styled-components";
 import axios from "axios";
 import { ThreeDots } from  'react-loader-spinner'
+import dayjs from "dayjs";
 
 export default function AddHabit(props){
 const DAYLETTERS=["D","S","T","Q","Q","S","S"];
-
-const { header } =useContext(UserContext);
+const { header, donePercent } =useContext(UserContext);
+const date=dayjs();
 const [isLoading,setLoading]=useState(false);
 
 function handleSave(event){
@@ -27,6 +28,7 @@ function handleSave(event){
     props.setHabitName("");
     props.setSelectedDays([]);
     props.requestHabitList();
+    donePercent.setCall(date.$ms); 
     });
     request.catch(error=>{
         console.log(error.data);

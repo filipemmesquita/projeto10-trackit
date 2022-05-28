@@ -40,8 +40,8 @@ export default function ToDoHabit(props){
             <div>
                 <h2>{props.habitName}</h2>
                 <br />
-                <p>Sequencia atual: <span>{props.currentSequence} dias</span></p>
-                <p>Seu recorde: <span>{props.highestSequence} dias</span></p>
+                <p>Sequencia atual: <GreenCheck isGreen={props.done}>{props.currentSequence} dias</GreenCheck></p>
+                <p>Seu recorde: <GreenCheck isGreen={props.currentSequence===props.highestSequence}>{props.highestSequence} dias</GreenCheck></p>
             </div>
             <IconWrapper done={props.done} onClick={toggleDone}>
              <ion-icon name="checkbox"></ion-icon>
@@ -61,6 +61,9 @@ margin-bottom:10px;
 div p{
     font-size: 12.976px;
 }
+`;
+const GreenCheck=styled.span`
+color:${props=>props.isGreen? "#8FC549":""};
 `;
 const IconWrapper=styled.div`
 ion-icon{

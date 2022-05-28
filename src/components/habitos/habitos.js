@@ -26,6 +26,8 @@ export default function Habitos(){
     const [habitName,setHabitName]=useState("");
     const [selectedDays,setSelectedDays]=useState([]);
 
+    
+
 
 
     return(

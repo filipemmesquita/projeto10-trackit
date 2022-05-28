@@ -11,27 +11,32 @@ export default function Hoje(){
     const DAY_NAMES=["Domingo", "Segunda-Feira", "Terça-Feira","Quarta-Feira", "Quinta-Feira","Sexta-Feira","Sábado"];
     const date=dayjs();
     const TODAY=date.$W;
-    const { header } =useContext(UserContext);
+    const { header, donePercent } =useContext(UserContext);
     const [todayHabits,setTodayHabits] =useState([]);
+
     function requestTodayHabits(){
         const requisition=axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", header.config)
         requisition.then(response=>{
-            setTodayHabits(response.data)
+            setTodayHabits(response.data);
+            donePercent.setCall(date.$ms);         
         })
         requisition.catch(error=>{
             alert("algo deu ruim")
             console.log(error.data)
         });
     }
+
     useEffect(requestTodayHabits, []);
+    
+
 
     return(
         <>
             <TopBar />
             <Container>
-                <TitleWrapper>
+                <TitleWrapper percent={donePercent.percent}>
                     <h1>{DAY_NAMES[TODAY]}, {TODAY}/{date.$M}</h1>
-                    <h2>nenhum hábito concluído ainda</h2>
+                    <h2>{donePercent.percent>0 ? `${donePercent.percent.toFixed()}% dos hábitos concluídos` :"Nenhum hábito Concluído ainda" }</h2>
                 </TitleWrapper>
                 {todayHabits.length>0 ?
                        todayHabits.map(habit=>
@@ -63,6 +68,6 @@ const TitleWrapper =styled.div`
 margin-bottom: 28px;
 h2{
     margin-top: 4px;
-    color: #BABABA;
+    color: ${props=> props.percent>0? "#8FC549":"#BABABA"};
 }
 `;

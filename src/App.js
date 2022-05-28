@@ -15,7 +15,10 @@ export default function App(){
     const header={config, setConfig}
     const [info,setInfo]=useState(null);
     const user={info,setInfo}
-
+    const [percent,setPercent]=useState(null);
+    const [call,setCall]=useState(0);
+    const donePercent={percent, setPercent, 
+        call, setCall}
 
     //credenciais de teste:
     //email: Begizaldo@begibegi.com
@@ -23,7 +26,7 @@ export default function App(){
     return(
         <BrowserRouter>
             <GlobalStyle />
-            <UserContext.Provider value={{header,user}}>
+            <UserContext.Provider value={{header,user,donePercent}}>
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/cadastro/" element={<Cadastro />} />
