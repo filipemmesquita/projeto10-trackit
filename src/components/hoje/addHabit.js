@@ -5,10 +5,10 @@ import axios from "axios";
 import { ThreeDots } from  'react-loader-spinner'
 
 export default function AddHabit(props){
-const dayLetters=["D","S","T","Q","Q","S","S"];
+const DAYLETTERS=["D","S","T","Q","Q","S","S"];
 
 const { header } =useContext(UserContext);
-const [isLoading,SetLoading]=useState(false);
+const [isLoading,setLoading]=useState(false);
 
 function handleSave(event){
     const submitObject={name:props.habitName,days:props.selectedDays.sort()}
@@ -19,17 +19,17 @@ function handleSave(event){
         alert("Escolha quais dias da semana você ira praticar seu hábito!")
     }
     else{
-    SetLoading(true);
+    setLoading(true);
     const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", submitObject, header.config);
     request.then(request=>{
-    SetLoading(false);
-    console.log(request.data);
+    setLoading(false);
     props.setAdding(false);
+    props.requestHabitList();
     });
     request.catch(error=>{
         console.log(error.data);
     alert("Algo errado ocorreu!")
-    SetLoading(false);
+    setLoading(false);
     });
     }
 }
@@ -38,7 +38,7 @@ function handleSave(event){
         <Content>
             <input type="text" placeholder="nome do hábito" value={props.habitName} onChange={e=>props.setHabitName(e.target.value)} required disabled={isLoading? true:false}/>
             <DayWrapper>
-            {dayLetters.map((letter, index)=><Day 
+            {DAYLETTERS.map((letter, index)=><Day 
                 isLoading={isLoading}
                 index={index} 
                 key={index} 

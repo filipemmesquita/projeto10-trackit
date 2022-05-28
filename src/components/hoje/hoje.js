@@ -1,16 +1,32 @@
 import UserContext from "../../contexts";
-import { useContext,useState } from "react";
+import { useContext,useState,useEffect } from "react";
 import TopBar from "../topBar";
 import Menu from "../menu";
 import styled from "styled-components";
 import AddHabit from "./addHabit";
+import axios from "axios";
+import Habit from "./habit";
 
 export default function Hoje(){
-    const { header, user } =useContext(UserContext);
-    const [isAdding,setAdding]=useState(false);
+    const { header } =useContext(UserContext);
+    const [habitList,setHabitList]=useState([])
+    function requestHabitList(){
+        const requisition=axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", header.config)
+        requisition.then(response=>{
+            setHabitList(response.data)
+        });
+        requisition.catch(error=>{
+            alert("algo deu ruim")
+            console.log(error.data)
+        });
+    }
+    useEffect(requestHabitList, []);
 
+    const [isAdding,setAdding]=useState(false);
     const [habitName,setHabitName]=useState("");
-    const [selectedDays,setSelectedDays]=useState([])
+    const [selectedDays,setSelectedDays]=useState([]);
+
+
 
     return(
         <>
@@ -24,9 +40,19 @@ export default function Hoje(){
                 habitName={habitName}
                 setHabitName={setHabitName}
                 selectedDays={selectedDays}
-                setSelectedDays={setSelectedDays} /> : "" }
+                setSelectedDays={setSelectedDays}
+                requestHabitList={requestHabitList} /> : "" }
                 <Content>
-                    <p>Você não tem nenhum hábito cadastrado ainda. adicione um hábito para começar a trackear!</p>
+                    {habitList.length>0 ?
+                            habitList.map(habit=>
+                            <Habit key={habit.id} 
+                            id={habit.id} 
+                            selectedDays={habit.days} 
+                            habitName={habit.name}
+                            requestHabitList={requestHabitList} />)
+                        :
+                            <p>Você não tem nenhum hábito cadastrado ainda. adicione um hábito para começar a trackear!</p>
+                    }
                 </Content>
 
             </Container>
@@ -48,6 +74,8 @@ align-items: center;
 margin-bottom: 20px;
 `;
 const Content =styled.div`
+display:flex;
+justify-content: center;
 `;
 const Button = styled.button`
 background: #52B6FF;
