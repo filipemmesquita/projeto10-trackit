@@ -10,7 +10,7 @@ import axios from "axios";
 export default function Hoje(){
     const DAY_NAMES=["Domingo", "Segunda-Feira", "Terça-Feira","Quarta-Feira", "Quinta-Feira","Sexta-Feira","Sábado"];
     const date=dayjs();
-    const TODAY=date.$W;
+    const WEEKDAY=date.$W;
     const { header, donePercent } =useContext(UserContext);
     const [todayHabits,setTodayHabits] =useState([]);
 
@@ -35,7 +35,7 @@ export default function Hoje(){
             <TopBar />
             <Container>
                 <TitleWrapper percent={donePercent.percent}>
-                    <h1>{DAY_NAMES[TODAY]}, {TODAY}/{date.$M}</h1>
+                    <h1>{DAY_NAMES[WEEKDAY]}, {date.$D}/{date.$M+1}</h1>
                     <h2>{donePercent.percent>0 ? `${donePercent.percent.toFixed()}% dos hábitos concluídos` :"Nenhum hábito Concluído ainda" }</h2>
                 </TitleWrapper>
                 {todayHabits.length>0 ?
