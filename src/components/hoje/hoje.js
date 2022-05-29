@@ -57,7 +57,7 @@ export default function Hoje(){
     );
 }
 const Container = styled.div`
-min-height: 700px;
+min-height: 100%;
 background-color:#E5E5E5;
 padding:100px 18px 95px;
 box-sizing: border-box;
