@@ -9,6 +9,7 @@ const DAYLETTERS=["D","S","T","Q","Q","S","S"];
 const { header,donePercent } =useContext(UserContext);
 const date=dayjs();
 function deleteHabit(){
+    if(window.confirm("Tem certeza que deseja deletar este hábito?")){
     const requisition = axios.delete("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/"+props.id,header.config)
     requisition.then(()=>{
         props.requestHabitList()
@@ -16,6 +17,7 @@ function deleteHabit(){
     });
     requisition.catch(error=>{alert("Algo deu errado com a remoção");
         console.log(error.data)})
+    }
 }
 
     return(

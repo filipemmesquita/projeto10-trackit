@@ -114,6 +114,7 @@ margin:0 5px;
     justify-content: center;
     align-items: center;
     opacity: 0.7;
+    background: #F2F2F2;
 }
 `;
 const DayWrapper=styled.div`
